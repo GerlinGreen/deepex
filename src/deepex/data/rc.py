@@ -17,8 +17,10 @@ class RCMentionGenerator:
                     if rname not in self.dataset[key]['rel'].keys():
                         self.dataset[key]['rel'][rname] = []
                     self.dataset[key]['rel'][rname].append(relation)
-        self.tokenizer = spacy.load('en_core_web_sm', disable=['tagger', 'parser', 'ner', 'textcat'])
-        self.whitespace_tokenizer = spacy.load('en_core_web_sm', disable=['tagger', 'parser', 'ner', 'textcat'])
+        # self.tokenizer = spacy.load('en_core_web_sm', disable=['tagger', 'parser', 'ner', 'textcat'])
+        # self.whitespace_tokenizer = spacy.load('en_core_web_sm', disable=['tagger', 'parser', 'ner', 'textcat'])
+        self.tokenizer = spacy.load('zh_core_web_sm', disable=['tagger', 'parser', 'ner', 'textcat'])
+        self.whitespace_tokenizer = spacy.load('zh_core_web_sm', disable=['tagger', 'parser', 'ner', 'textcat'])
         self.whitespace_tokenizer.tokenizer = WhitespaceTokenizer(self.whitespace_tokenizer.vocab)
 
     def get_mentions_raw_text(self, text: str, whitespace_tokenize=False, extra=None):

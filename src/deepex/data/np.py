@@ -6,10 +6,18 @@ from ..utils import *
 class NPMentionGenerator:
 
     def __init__(self):
-        spacy.load('en_core_web_sm', disable=['tagger', 'parser', 'textcat'])
-        self.tokenizer = spacy.load('en_core_web_sm')
-        self.whitespace_tokenizer = spacy.load('en_core_web_sm')
-        self.whitespace_tokenizer.tokenizer = WhitespaceTokenizer(self.whitespace_tokenizer.vocab)
+      # if nlp == "ckiplab/bert-base-han-chinese" \
+      #   or  nlp == "bert-base-chinese" :
+      #   self.nlp = 'zh_core_web_sm'
+      # else :
+      #   self.nlp = 'en_core_web_sm'
+      # spacy.load('en_core_web_sm', disable=['tagger', 'parser', 'textcat'])
+      # self.tokenizer = spacy.load('en_core_web_sm')
+      # self.whitespace_tokenizer = spacy.load('en_core_web_sm')
+      spacy.load('zh_core_web_sm', disable=['tagger', 'parser', 'textcat'])
+      self.tokenizer = spacy.load('zh_core_web_sm')
+      self.whitespace_tokenizer = spacy.load('zh_core_web_sm')
+      self.whitespace_tokenizer.tokenizer = WhitespaceTokenizer(self.whitespace_tokenizer.vocab)
 
     def get_mentions_raw_text(self, text: str, whitespace_tokenize=False, extra=None):
         if whitespace_tokenize:

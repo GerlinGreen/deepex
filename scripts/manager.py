@@ -56,6 +56,7 @@ if __name__=="__main__":
             'PENN',
             'FewRel',
             'TACRED',
+            'Shiji',
         ],
         help = "The task to be run"
     )
@@ -63,6 +64,8 @@ if __name__=="__main__":
         choices=[
             'bert-base-cased',
             'bert-large-cased',
+            'bert-base-chinese',
+            'ckiplab/bert-base-han-chinese',
         ],
         help = "The pre-trained model type to be used for generating attention matrices to perform beam search on"
     )
@@ -155,7 +158,7 @@ if __name__=="__main__":
                         .format(args.task_abbr,args.proc_dir,classified,args.model.split('-')[0]+" "+args.model,args.ner_mode,args.beam_mode,args.beam_size,args.max_distance,args.batch_size)
                     )
 
-    if args.stage<=2 and (args.stage==2 or not args.debug):
+    if args.stage<=2 and (args.stage==2 or not args.debug) and args.task_meta!='Shiji' :
         RESULT = "result/" + ".".join([args.task,args.model,args.ner_mode,f"d{args.max_distance}",f"b{args.beam_size}"])
         SysCall(
             "python3 scripts/ranking.py -proc_dir {0} -clss_dir {1} -dest {2}".format(args.proc_dir,args.clss_dir,RESULT+".unsort")

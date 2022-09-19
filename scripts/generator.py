@@ -49,6 +49,11 @@ logger.addHandler(logging.StreamHandler())
 def main():
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
+    
+    print("MODEL_ARGS>> ", model_args)
+    print("DATA_ARGS>> ", data_args)
+    print("TRAINING_ARGS>> ", training_args)
+
     if not os.path.exists(os.path.split(training_args.output_dir)[0]):
         try:
             os.mkdir(os.path.split(training_args.output_dir)[0])
@@ -140,6 +145,13 @@ def main():
 
     start_time = time.time()
     start_aug_time = time.time()
+
+    # if model_args.model_name_or_path == "ckiplab/bert-base-han-chinese" \
+    #   or  model_args.model_name_or_path == "bert-base-chinese" :
+    #   pretrained_tokenizer = 'zh_core_web_sm'
+    # else :
+    #   pretrained_tokenizer = 'en_core_web_sm'
+
     if data_args.data_aug == 'np':
         mention_generator = NPMentionGenerator()
     elif data_args.data_aug == 'rc':

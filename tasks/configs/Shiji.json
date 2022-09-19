@@ -1,0 +1,7 @@
+{
+    "task_abbr": "oie",
+    "task_meta": "Shiji",
+    "data_dir": "shiji_related/raw_sentences/",
+    
+    "gold": "shiji_related/oie_corpus/test.oie"
+}
