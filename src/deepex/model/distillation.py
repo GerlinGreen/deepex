@@ -27,7 +27,7 @@ class Distillation:
             if os.path.isdir(os.path.join(self.input_dir, f)):
                 print(os.path.join(os.path.join(self.input_dir, f), 'search_res.json'))
                 self.merge_search_res(
-                    json.load(open(os.path.join(os.path.join(self.input_dir, f), 'search_res.json'), 'r')), search_res)
+                    json.load(open(os.path.join(os.path.join(self.input_dir, f), 'search_res.json'), 'r', encoding='utf-8')), search_res)
         return search_res
 
     def rank_entity_seqs_with_score_freq(self, x, dedup_ranking_type):
@@ -95,7 +95,7 @@ class Distillation:
                     self.corpus_dedup_triplets[triplet][1] += score
         self.corpus_dedup_triplets = self.rank_entity_seqs_with_score_freq(self.corpus_dedup_triplets,
                                                                            dedup_ranking_type)
-        json.dump(self.corpus_dedup_triplets, open(self.filepath, 'w'))
+        json.dump(self.corpus_dedup_triplets, open(self.filepath, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
 
     def remove_non_ascii(self, text):
         return re.sub(r'[^\x00-\x7F]+', ' ', text).strip()
@@ -140,7 +140,7 @@ class Distillation:
         for f in tqdm(os.listdir(self.input_dir), desc='deduplicating batch'):
             if os.path.isdir(os.path.join(self.input_dir, f)):
                 print(os.path.join(os.path.join(self.input_dir, f), 'search_res.json'))
-                search_res = json.load(open(os.path.join(os.path.join(self.input_dir, f), 'search_res.json'), 'r'))
+                search_res = json.load(open(os.path.join(os.path.join(self.input_dir, f), 'search_res.json'), 'r', encoding='utf-8'))
                 for k, v in tqdm(search_res.items(), desc='deduplicating doc'):  
                     sent_dedup_triplets = []
                     sent_dedup_triplets_with_sent = []
@@ -193,4 +193,4 @@ class Distillation:
             for cand_triplet in cand_triplets:
                     sent_dedup_triplets_with_sent.append(cand_triplet)
             dedup_triplets_with_sent[docid] = sent_dedup_triplets_with_sent
-        json.dump(dedup_triplets_with_sent, open(filepath, 'w'))
+        json.dump(dedup_triplets_with_sent, open(filepath, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)

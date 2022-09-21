@@ -56,11 +56,15 @@ def main():
 
     if not os.path.exists(os.path.split(training_args.output_dir)[0]):
         try:
+            if 'ckiplab/' in training_args.output_dir :
+              training_args.output_dir = training_args.output_dir.replace('ckiplab/', 'ckiplab__')
             os.mkdir(os.path.split(training_args.output_dir)[0])
         except:
             pass
     if not os.path.exists(training_args.output_dir):
         try:
+            if 'ckiplab/' in training_args.output_dir :
+              training_args.output_dir = training_args.output_dir.replace('ckiplab/', 'ckiplab__')
             os.mkdir(training_args.output_dir)
         except:
             pass
@@ -92,8 +96,9 @@ def main():
 
     set_seed(training_args.seed)
 
-
     if model_args.model_name_or_path:
+        # if "__" in model_args.model_args_model_name_or_path:
+        #     model_args.model_args_model_name_or_path = model_args.model_args_model_name_or_path.replace('__', '/')
         config = AutoConfig.from_pretrained(model_args.model_name_or_path, cache_dir=model_args.cache_dir)
         config.output_attentions = True
     else:
@@ -198,7 +203,7 @@ def main():
                 except:
                     pass
             _, _, _, search_res = res
-            json.dump(search_res, open(os.path.join(res_dir, "search_res.json"), 'w'))
+            json.dump(search_res, open(os.path.join(res_dir, "search_res.json"), 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
             logger.info('total dump triplets time: {}s'.format(time.time() - start_merge_time))
     logger.info('total time: {}s'.format(time.time() - start_time))
 
